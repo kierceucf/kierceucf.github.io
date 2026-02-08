@@ -1,0 +1,90 @@
+/* ===== Reset ===== */
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ===== Jump Menu ===== */
+#jumpMenu{
+    position:fixed;
+    top:0;
+    left:0;
+    width:15%;
+    background:#c7a84a;
+    padding:20px;
+    padding-bottom:140px; /* prevents overlap with thank you box */
+    box-sizing:border-box;
+}
+
+#jumpMenu h2{
+    text-align:center;
+}
+
+/* ===== Header ===== */
+header{
+    position:fixed;
+    top:0;
+    left:15%;
+    width:85%;
+    z-index:1000;
+}
+
+/* Blog Title Bar */
+#titleBar{
+    background:#d62d20;
+    text-align:center;
+    padding:15px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* Navigation Bar */
+nav{
+    background:black;
+    text-align:center;
+    padding:10px 0;
+}
+
+/* Fake Buttons */
+nav span{
+    display:inline-block;
+    background:#2d3cff;
+    color:white;
+    padding:15px 60px;
+    margin:0 20px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* ===== Main Content ===== */
+main{
+    margin-left:15%;
+    padding-top:160px; /* space for fixed header */
+    padding-left:30px;
+    padding-right:30px;
+}
+
+/* Article Layout */
+.articles{
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+    justify-content:center;
+}
+
+/* Individual Article */
+article{
+    width:300px;
+}
+
+/* ===== Thank You Box ===== */
+#thankYou{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#a7d3f5;
+    padding:25px;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0 0 5px gray;
+}
