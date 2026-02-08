@@ -1,0 +1,99 @@
+/* ===== Reset ===== */
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+}
+
+/* ===== Jump Menu (Left Sidebar) ===== */
+#jumpMenu{
+    position:fixed;
+    left:0;
+    top:0;
+    width:15%;
+    height:100%;
+    background:#c7a84a;
+    padding:20px;
+    box-sizing:border-box;
+    overflow:auto; /* ensures all 10 links remain reachable */
+}
+
+#jumpMenu a{
+    display:block;
+    margin:8px 0;
+    font-weight:bold;
+}
+
+/* ===== Main Content Area ===== */
+main{
+    margin-left:15%;
+    padding-top:140px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+/* ===== Header (Always Top) ===== */
+header{
+    position:fixed;
+    top:0;
+    left:15%;
+    width:85%;
+    background:#d6321f;
+    text-align:center;
+    padding:20px 0;
+    box-sizing:border-box;
+    z-index:1000;
+}
+
+header p{
+    margin:0 0 15px 0;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* ===== Fake Navigation Buttons ===== */
+header nav{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    background:black;
+    padding:10px 0;
+}
+
+header button{
+    background:blue;
+    color:white;
+    border:none;
+    font-size:18px;
+    padding:15px 30px;
+    cursor:default;
+}
+
+/* ===== Article Container ===== */
+#container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+}
+
+/* ===== Individual Articles ===== */
+article{
+    width:300px;
+    line-height:1.4;
+}
+
+/* ===== Thank You Box ===== */
+#thanks{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#9fd3f7;
+    padding:15px 25px;
+    font-size:20px;
+    border:1px solid black;
+}
+
+/* ===== Footer ===== */
+footer{
+    margin-top:40px;
+    padding:20px;
+}
