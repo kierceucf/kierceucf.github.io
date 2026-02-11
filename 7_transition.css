@@ -1,0 +1,161 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader&display=swap');
+
+/* ================= PAGE ================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Blog Title */
+header p {
+    font-family: 'Newsreader', serif;
+    font-size: 36px;
+    text-align: center;
+    background: #cf2f1f;
+    padding: 20px;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* ================= LAYOUT ================= */
+
+main {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+
+/* ================= NAVIGATION ================= */
+
+nav {
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: black;
+}
+
+/* Nav Buttons */
+nav button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: blue;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.5s;
+}
+
+/* Button Hover */
+nav button:hover {
+    background: darkblue;
+}
+
+/* ================= JUMP MENU ================= */
+
+#jumpMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #c4a44d;
+
+    /* Hidden by default */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+/* 🔥 FIX: Keeps menu open when hovering nav OR menu */
+#menuItems:hover #jumpMenu {
+    max-height: 400px;
+}
+
+/* Jump Menu Links */
+#jumpMenu li a {
+    display: block;
+    padding: 5px 10px;
+    color: blue;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Jump Menu Hover */
+#jumpMenu li a:hover {
+    background: #8c742f;
+    color: white;
+}
+
+/* ================= ARTICLES ================= */
+
+article {
+    color: gray;
+    transition: transform 2s, background 2s, color 2s, padding 2s;
+}
+
+/* Article Hover */
+article:hover {
+    background: #222;
+    color: white;
+    transform: scale(1.05);
+    padding: 10px;
+}
+
+/* ================= READ MORE LINKS ================= */
+
+/* Add arrow image after Google links ("Read more") */
+article p a[href*="google.com"]::after {
+    content: url("arrow.png");
+    margin-left: 5px;
+}
+
+article p a {
+    color: blue;
+    text-decoration: none;
+}
+
+
+
+
+
+article p a {
+    color: blue;
+    text-decoration: none;
+}
+
+/* ================= THANK YOU BOX ================= */
+
+#thanks {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: fit-content;
+    background: lightblue;
+    padding: 10px;
+    border: 1px solid blue;
+}
+
+
+#thanks a {
+    text-decoration: none;
+    font-size: 20px;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+}
