@@ -22,7 +22,7 @@ h1 {
     text-align: center;
 }
 
-/* ================= LAYOUT ================= */
+/* Layout */
 
 main {
     margin-left: 200px;
@@ -35,7 +35,7 @@ main {
     gap: 40px;
 }
 
-/* ================= NAVIGATION ================= */
+/* Navigation */
 
 nav {
     width: 200px;
@@ -63,7 +63,7 @@ nav button:hover {
     background: darkblue;
 }
 
-/* ================= JUMP MENU ================= */
+/* Jump */
 
 #jumpMenu {
     list-style: none;
@@ -77,7 +77,6 @@ nav button:hover {
     transition: max-height 0.5s ease;
 }
 
-/* 🔥 FIX: Keeps menu open when hovering nav OR menu */
 #menuItems:hover #jumpMenu {
     max-height: 400px;
 }
@@ -97,7 +96,7 @@ nav button:hover {
     color: white;
 }
 
-/* ================= ARTICLES ================= */
+/* Articles */
 
 article {
     color: gray;
@@ -112,9 +111,8 @@ article:hover {
     padding: 10px;
 }
 
-/* ================= READ MORE LINKS ================= */
+/*Read More Links */
 
-/* Add arrow image after Google links ("Read more") */
 article p a[href*="google.com"]::after {
     content: url("arrow.png");
     margin-left: 5px;
@@ -134,7 +132,7 @@ article p a {
     text-decoration: none;
 }
 
-/* ================= THANK YOU BOX ================= */
+/* Thank You */
 
 #thanks {
     position: fixed;
@@ -153,9 +151,10 @@ article p a {
     font-size: 20px;
 }
 
-/* ================= FOOTER ================= */
+/* Footer */
 
 footer {
     margin-top: 40px;
     text-align: center;
+
 }
