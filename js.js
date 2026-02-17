@@ -1,6 +1,6 @@
 let counter = 0;
 
-/* ---------------- Simple Functions ---------------- */
+/* Simple Functions */
 
 function tickUp() {
     counter++;
@@ -12,7 +12,7 @@ function tickDown() {
     document.getElementById("counter").textContent = counter;
 }
 
-/* ---------------- Simple For Loop ---------------- */
+/* For Loop */
 
 function runForLoop() {
     let output = "";
@@ -24,7 +24,7 @@ function runForLoop() {
     document.getElementById("forLoopResult").textContent = output.trim();
 }
 
-/* ---------------- Repetition With Condition ---------------- */
+/* Conditional Repitition */
 
 function showOddNumbers() {
     let output = "";
@@ -38,7 +38,7 @@ function showOddNumbers() {
     document.getElementById("oddNumberResult").textContent = output.trim();
 }
 
-/* ---------------- Arrays ---------------- */
+/* Arrays */
 
 function addMultiplesToArray() {
     let multiples = [];
@@ -50,7 +50,7 @@ function addMultiplesToArray() {
     console.log(multiples);
 }
 
-/* ---------------- Objects and Form Fields ---------------- */
+/* Objects and Form- */
 
 function printCarObject() {
     let car = {
@@ -62,7 +62,6 @@ function printCarObject() {
     console.log(car);
 }
 
-/* ---------------- Objects and Form Fields pt. 2 ---------------- */
 
 function loadCar(num) {
     let selectedCar;
@@ -76,7 +75,7 @@ function loadCar(num) {
     document.getElementById("carColor").value = selectedCar.cColor;
 }
 
-/* ---------------- Changing Styles ---------------- */
+/* Styles */
 
 function changeColor(num) {
     let paragraph = document.getElementById("styleParagraph");
