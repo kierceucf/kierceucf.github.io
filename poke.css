@@ -1,0 +1,102 @@
+body {
+    background-color: #9fc3cf; /* light blue background */
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 40px 0;
+    text-align: center;
+}
+
+/* Main Card */
+.container {
+    background-color: white;
+    width: 420px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    border-radius: 40px;
+    border: 6px solid #d89c00; /* golden border */
+}
+
+/* Title / Label */
+label {
+    font-size: 18px;
+}
+
+/* Input field */
+input[type="text"] {
+    width: 200px;
+    padding: 3px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* Buttons */
+button {
+    font-family: "Times New Roman", Times, serif;
+    padding: 3px 8px;
+    margin-top: 10px;
+}
+
+/* Pokemon Image */
+#pokemonDisplay img {
+    width: 180px;
+    margin: 20px 0;
+}
+
+/* Audio */
+audio {
+    margin: 10px 0 20px 0;
+}
+
+/* Move dropdowns */
+#moveSelectors {
+    margin-bottom: 10px;
+}
+
+select {
+    width: 170px;
+    margin: 5px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* Team Section */
+.team {
+    margin-top: 20px;
+}
+
+#teamTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#teamTable td {
+    border: 1px solid black;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+#teamTable img {
+    width: 80px;
+}
+
+#teamTable ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.team-member {
+    margin-top: 10px;
+}
+
+.team-member img {
+    width: 70px;
+}
+
+.search-section {
+    margin-bottom: 20px;
+}
+
+.search-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
