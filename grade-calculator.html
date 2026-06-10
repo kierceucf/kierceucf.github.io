@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade Calculator · Kierce Nguyen</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0D1B2A; --navy2: #112236; --navy3: #1A2F47;
+  --amber: #F4A261; --amber2: #E07B39;
+  --white: #F0F4F8; --muted: #8BA3BA; --card: #162337;
+  --green: #52C97A; --red: #E05252; --blue: #5B9BF4;
+}
+body { background: var(--navy); color: var(--white); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+nav {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 6%;
+  background: rgba(13,27,42,0.9); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(244,162,97,0.08);
+}
+.back-link {
+  text-decoration: none; color: var(--muted); font-size: 0.85rem;
+  display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s;
+}
+.back-link:hover { color: var(--amber); }
+.nav-sep { color: var(--navy3); }
+.nav-title { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--white); }
+
+main { max-width: 760px; margin: 0 auto; padding: 3rem 6% 5rem; }
+.page-eyebrow {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--amber); margin-bottom: 0.5rem;
+}
+h1 { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.page-sub { color: var(--muted); font-size: 0.92rem; margin-bottom: 2.5rem; }
+.tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.tag {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  padding: 0.22rem 0.6rem; border-radius: 4px;
+  background: rgba(244,162,97,0.12); color: var(--amber); text-transform: uppercase;
+}
+
+/* Result card */
+.result-card {
+  background: var(--card); border: 1px solid rgba(244,162,97,0.15);
+  border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+}
+.grade-display {
+  text-align: center; flex-shrink: 0;
+}
+.grade-letter {
+  font-family: 'Sora', sans-serif; font-size: 3.5rem; font-weight: 700;
+  line-height: 1; color: var(--amber);
+  transition: color 0.3s;
+}
+.grade-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+.grade-stats { flex: 1; min-width: 180px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.stat-row:last-child { border-bottom: none; }
+.stat-name { font-size: 0.88rem; color: var(--muted); }
+.stat-val { font-weight: 600; font-size: 0.88rem; }
+
+/* Progress bar */
+.progress-wrap { margin-top: 1rem; }
+.progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
+.progress-bar-bg { background: var(--navy3); border-radius: 4px; height: 8px; overflow: hidden; }
+.progress-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--amber2), var(--amber));
+  transition: width 0.4s ease;
+}
+
+/* App card */
+.app-card {
+  background: var(--card); border: 1px solid rgba(244,162,97,0.12);
+  border-radius: 12px; padding: 2rem;
+}
+
+.form-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.75rem; align-items: flex-end; }
+input[type="text"], input[type="number"] {
+  flex: 1; min-width: 120px;
+  background: var(--navy3); border: 1px solid rgba(244,162,97,0.15); border-radius: 6px;
+  padding: 0.6rem 0.9rem; color: var(--white);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+}
+input::placeholder { color: var(--muted); }
+input:focus { border-color: var(--amber); }
+.field-group { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 120px; }
+.field-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+
+.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+button {
+  padding: 0.6rem 1.3rem; border-radius: 6px;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.btn-add { background: var(--amber); color: var(--navy); }
+.btn-add:hover { background: var(--amber2); }
+.btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid rgba(240,244,248,0.1); }
+.btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 1.5rem 0; }
+.status-msg { font-size: 0.82rem; color: var(--amber); min-height: 1.2rem; margin-bottom: 0.75rem; }
+
+.section-title { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+
+#grade-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.grade-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: var(--navy3); border: 1px solid rgba(244,162,97,0.07);
+  border-radius: 8px; padding: 0.7rem 1rem;
+  animation: slideIn 0.2s ease;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.grade-badge {
+  width: 38px; height: 38px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.85rem;
+  flex-shrink: 0; background: rgba(244,162,97,0.12); color: var(--amber);
+}
+.grade-item-info { flex: 1; min-width: 0; }
+.grade-item-name { font-weight: 500; font-size: 0.9rem; }
+.grade-item-meta { font-size: 0.78rem; color: var(--muted); }
+.grade-item-score { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--white); flex-shrink: 0; }
+.grade-item-delete {
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  font-size: 0.9rem; padding: 0.2rem 0.4rem; border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.grade-item-delete:hover { color: var(--red); background: rgba(224,82,82,0.1); }
+.empty-state { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 2rem 0; }
+</style>
+</head>
+<body>
+<nav>
+  <a class="back-link" href="index.html">← Back</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">📊 Grade Calculator</span>
+</nav>
+
+<main>
+  <p class="page-eyebrow">Demo · Python → Browser</p>
+  <h1>Grade Calculator</h1>
+  <p class="page-sub">An in-browser recreation of the Python CLI project. Add your assignments and weights to calculate your weighted course average.</p>
+  <div class="tags">
+    <span class="tag">Python</span>
+    <span class="tag">Loops</span>
+    <span class="tag">CLI</span>
+  </div>
+
+  <!-- Live result -->
+  <div class="result-card" id="result-card">
+    <div class="grade-display">
+      <div class="grade-letter" id="grade-letter">—</div>
+      <div class="grade-label">Letter Grade</div>
+    </div>
+    <div class="grade-stats" style="flex:1">
+      <div class="stat-row">
+        <span class="stat-name">Weighted Average</span>
+        <span class="stat-val" id="avg-val">—</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-name">Assignments Added</span>
+        <span class="stat-val" id="count-val">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-name">Total Weight</span>
+        <span class="stat-val" id="weight-val">0%</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progress to 100%</span><span id="prog-pct">0%</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-card">
+    <div class="form-row">
+      <div class="field-group">
+        <label class="field-label">Assignment Name</label>
+        <input type="text" id="inp-name" placeholder="e.g. Midterm Exam" />
+      </div>
+      <div class="field-group" style="max-width:120px">
+        <label class="field-label">Score (%)</label>
+        <input type="number" id="inp-score" placeholder="e.g. 87" min="0" max="100" step="0.1" />
+      </div>
+      <div class="field-group" style="max-width:120px">
+        <label class="field-label">Weight (%)</label>
+        <input type="number" id="inp-weight" placeholder="e.g. 25" min="0" max="100" step="0.1" />
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-add" onclick="addGrade()">+ Add Assignment</button>
+      <button class="btn-ghost" onclick="clearAll()">Clear All</button>
+    </div>
+    <p class="status-msg" id="status"></p>
+
+    <hr class="divider" />
+    <p class="section-title">Assignments</p>
+    <div id="grade-list"></div>
+  </div>
+</main>
+
+<script>
+let grades = [];
+
+function letterGrade(avg) {
+  if (avg >= 90) return { letter: 'A', color: '#52C97A' };
+  if (avg >= 80) return { letter: 'B', color: '#5B9BF4' };
+  if (avg >= 70) return { letter: 'C', color: '#F4A261' };
+  if (avg >= 60) return { letter: 'D', color: '#E07B39' };
+  return { letter: 'F', color: '#E05252' };
+}
+
+function setStatus(msg, isError = false) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.style.color = isError ? '#E05252' : 'var(--amber)';
+  setTimeout(() => { el.textContent = ''; }, 2500);
+}
+
+function addGrade() {
+  const name = document.getElementById('inp-name').value.trim();
+  const score = parseFloat(document.getElementById('inp-score').value);
+  const weight = parseFloat(document.getElementById('inp-weight').value);
+
+  if (!name) { setStatus('Please enter an assignment name.', true); return; }
+  if (isNaN(score) || score < 0 || score > 100) { setStatus('Score must be 0–100.', true); return; }
+  if (isNaN(weight) || weight <= 0 || weight > 100) { setStatus('Weight must be 1–100.', true); return; }
+
+  const totalWeight = grades.reduce((s, g) => s + g.weight, 0);
+  if (totalWeight + weight > 100) {
+    setStatus(`Total weight would exceed 100% (currently ${totalWeight}%).`, true); return;
+  }
+
+  grades.push({ id: Date.now(), name, score, weight });
+  document.getElementById('inp-name').value = '';
+  document.getElementById('inp-score').value = '';
+  document.getElementById('inp-weight').value = '';
+  setStatus(`✓ Added: ${name} — ${score}% (weight: ${weight}%)`);
+  render();
+}
+
+function deleteGrade(id) {
+  const g = grades.find(g => g.id === id);
+  grades = grades.filter(g => g.id !== id);
+  if (g) setStatus(`Removed: ${g.name}`);
+  render();
+}
+
+function clearAll() {
+  if (grades.length === 0) return;
+  grades = [];
+  setStatus('Cleared all assignments.');
+  render();
+}
+
+function render() {
+  const totalWeight = grades.reduce((s, g) => s + g.weight, 0);
+  const weightedSum = grades.reduce((s, g) => s + (g.score * g.weight), 0);
+  const avg = totalWeight > 0 ? weightedSum / totalWeight : null;
+
+  document.getElementById('count-val').textContent = grades.length;
+  document.getElementById('weight-val').textContent = totalWeight.toFixed(1) + '%';
+  document.getElementById('prog-pct').textContent = totalWeight.toFixed(0) + '%';
+  document.getElementById('prog-fill').style.width = Math.min(totalWeight, 100) + '%';
+
+  if (avg !== null) {
+    const { letter, color } = letterGrade(avg);
+    document.getElementById('avg-val').textContent = avg.toFixed(2) + '%';
+    const letterEl = document.getElementById('grade-letter');
+    letterEl.textContent = letter;
+    letterEl.style.color = color;
+  } else {
+    document.getElementById('avg-val').textContent = '—';
+    document.getElementById('grade-letter').textContent = '—';
+    document.getElementById('grade-letter').style.color = 'var(--amber)';
+  }
+
+  const list = document.getElementById('grade-list');
+  if (grades.length === 0) {
+    list.innerHTML = '<div class="empty-state">No assignments yet. Add one above.</div>';
+    return;
+  }
+
+  list.innerHTML = grades.map(g => {
+    const { letter, color } = letterGrade(g.score);
+    return `
+      <div class="grade-item">
+        <div class="grade-badge" style="background:${color}22;color:${color}">${letter}</div>
+        <div class="grade-item-info">
+          <div class="grade-item-name">${g.name}</div>
+          <div class="grade-item-meta">Weight: ${g.weight}%</div>
+        </div>
+        <div class="grade-item-score">${g.score}%</div>
+        <button class="grade-item-delete" onclick="deleteGrade(${g.id})" title="Delete">✕</button>
+      </div>
+    `;
+  }).join('');
+}
+
+['inp-name', 'inp-score', 'inp-weight'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') addGrade();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
