@@ -1,100 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kierce Nguyen | Resume</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kierce Nguyen | IT Student & Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D1B2A;
+      --navy2:  #112236;
+      --navy3:  #1A2F47;
+      --amber:  #F4A261;
+      --amber2: #E07B39;
+      --white:  #F0F4F8;
+      --muted:  #8BA3BA;
+      --card:   #162337;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 6%;
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(244,162,97,0.08);
+    }
+    .nav-logo {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--amber);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 6%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(244,162,97,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,162,97,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute; bottom: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(244,162,97,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.4rem;
+    }
+    h1 span { color: var(--amber); }
+    .hero-sub {
+      font-size: 1.12rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.6rem;
+      font-weight: 300;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.9rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: all 0.22s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--navy);
+    }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(240,244,248,0.25);
+    }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 6%; }
+    section:nth-child(even) { background: var(--navy2); }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--white);
+    }
+    h2 .dim { color: var(--muted); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; }
+    .about-text p strong { color: var(--white); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .skill-tag {
+      background: var(--navy3);
+      border: 1px solid rgba(244,162,97,0.15);
+      border-radius: 6px;
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--white);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); flex-shrink: 0;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+    }
+    .timeline-item {
+      padding-left: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -5px; top: 8px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 3px rgba(244,162,97,0.2);
+    }
+    .timeline-role {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .timeline-meta {
+      font-size: 0.85rem;
+      color: var(--amber);
+      margin: 0.2rem 0 0.5rem;
+    }
+    .timeline-desc { font-size: 0.92rem; color: var(--muted); }
+
+    /* ── EDUCATION ── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid rgba(244,162,97,0.12);
+      border-radius: 10px;
+      padding: 1.8rem;
+    }
+    .edu-school {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .edu-degree { font-size: 0.9rem; color: var(--muted); }
+    .edu-year {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(244,162,97,0.1);
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid rgba(244,162,97,0.1);
+      border-radius: 10px;
+      padding: 1.6rem;
+      text-decoration: none;
+      color: var(--white);
+      display: flex; flex-direction: column;
+      transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+    }
+    .project-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .project-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .project-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      flex-grow: 1;
+      margin-bottom: 1.2rem;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(244,162,97,0.12);
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+
+    /* ── CONTACT ── */
+    .contact-inner {
+      max-width: 560px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .contact-inner p { color: var(--muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 6%;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .about-grid, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+
+    /* ── CURSOR BLINK ── */
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 0.85em;
+      background: var(--amber);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-
-<header>
-    <h1>Kierce Nguyen</h1>
-    <p>
-        <a href="mailto:kiercejnguyen@ucf.edu">kiercejnguyen@ucf.edu</a> |
-        <a href="https://www.linkedin.com/in/kierce-nguyen-99a2a8291/" target="_blank">LinkedIn</a>
-    </p>
-</header>
-
-<main class="layout">
-
-<div class="left-column">
-<section>
-    <h2>Professional Objective</h2>
-    <p>
-        Motivated and detail-oriented student seeking opportunities to apply technical
-        and problem-solving skills in a professional environment.
-    </p>
-</section>
-
-<section>
-    <h2>Skills</h2>
-    <ul>
-        <li>C Programming</li>
-        <li>Python Programming</li>
-        <li>HTML & CSS</li>
-        <li>Microsoft Office</li>
-        <li>Customer Service</li>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">KN</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-</section>
-</div>
+  </nav>
 
-<div class="right-column">
-<section>
-    <h2>Education</h2>
-    <article>
-        <h3>University of Central Florida</h3>
-        <p>B.S. Information Technology (In Progress)</p>
-    </article>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">IT Student · Developer · Problem Solver</p>
+    <h1>Hi, I'm<br><span>Kierce Nguyen</span><span class="cursor"></span></h1>
+    <p class="hero-sub">
+      Studying Information Technology at UCF, building projects in Python, Java, and web technologies — and looking for opportunities to grow in a professional setting.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View My Work</a>
+      <a class="btn btn-ghost" href="mailto:kiercejnguyen@ucf.edu">Get In Touch</a>
+    </div>
+  </section>
 
-    <article>
-        <h3>Boca Raton Community High School</h3>
-        <p>Graduated June 2022</p>
-    </article>
-</section>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <p class="section-label">Who I Am</p>
+      <h2>About <span class="dim">Me</span></h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a motivated IT student at the <strong>University of Central Florida</strong>, passionate about applying technical skills to real-world problems. I enjoy building things for the web, working with data, and continuously learning new technologies.</p>
+        <p>Whether it's crafting a user-facing web form, managing data with Java, or learning new frameworks — I bring a detail-oriented and problem-solving mindset to everything I build.</p>
+        <p>Outside of coursework, I've developed people skills and a strong work ethic through customer-facing roles, and I thrive in collaborative, fast-paced environments.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-tag"><span class="skill-dot"></span>C Programming</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Python</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Java</div>
+        <div class="skill-tag"><span class="skill-dot"></span>HTML & CSS</div>
+        <div class="skill-tag"><span class="skill-dot"></span>JavaScript</div>
+        <div class="skill-tag"><span class="skill-dot"></span>DOM / Fetch API</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Microsoft Office</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Client Relations</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Sales & Negotiation</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Needs Analysis</div>
+        <div class="skill-tag"><span class="skill-dot"></span>CRM Tools</div>
+        <div class="skill-tag"><span class="skill-dot"></span>Active Listening</div>
+      </div>
+    </div>
+  </section>
 
-<section>
-    <h2>Work Experience</h2>
-    <article>
-        <h3>Server Assistant — Lemongrass Asian Bistro</h3>
-        <p>2022 | Boca Raton, FL</p>
-    </article>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <p class="section-label">Work History</p>
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <p class="timeline-role">Sales Representative</p>
+        <p class="timeline-meta">Central Health Advisors · 2023–Present · Boca Raton, FL</p>
+        <p class="timeline-desc">Consult with clients to identify healthcare coverage needs and recommend appropriate insurance solutions. Manage a pipeline of prospects through outreach, follow-up, and close — consistently meeting and exceeding monthly sales targets. Build long-term client relationships through clear communication, active listening, and ongoing account support.</p>
+        <div class="project-tags" style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem;">
+          <span class="tag">Client Relations</span>
+          <span class="tag">Sales Pipeline</span>
+          <span class="tag">Needs Analysis</span>
+          <span class="tag">Negotiation</span>
+          <span class="tag">CRM Tools</span>
+          <span class="tag">Communication</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-role">Server Assistant</p>
+        <p class="timeline-meta">Lemongrass Asian Bistro · 2022 · Boca Raton, FL</p>
+        <p class="timeline-desc">Supported front-of-house operations in a high-volume restaurant environment, coordinating with team members to deliver timely, quality service to guests.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-role">Team Member</p>
+        <p class="timeline-meta">Whit's Frozen Custard · 2020–2021 · Boca Raton, FL</p>
+        <p class="timeline-desc">Provided friendly, efficient customer service and maintained a clean, welcoming environment. Built communication and teamwork skills in a fast-paced setting.</p>
+      </div>
+    </div>
+  </section>
 
-    <article>
-        <h3>Team Member — Whit's Frozen Custard</h3>
-        <p>2020–2021 | Boca Raton, FL</p>
-    </article>
-</section>
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="reveal">
+      <p class="section-label">Academic Background</p>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <p class="edu-school">University of Central Florida</p>
+        <p class="edu-degree">B.S. Information Technology (In Progress)</p>
+        <span class="edu-year">Current</span>
+      </div>
+      <div class="edu-card">
+        <p class="edu-school">Boca Raton Community High School</p>
+        <p class="edu-degree">High School Diploma</p>
+        <span class="edu-year">June 2022</span>
+      </div>
+    </div>
+  </section>
 
-<section>
-    <h2>Projects</h2>
-    <ul>
-        <li><a href="project1.html">Pizza Ordering Form Website</a></li>
-        <li><a href="project2.html">Personnel Management System (Java)</a></li>
-        <li><a href="5_CSS1-1.html">CSS Styling</a></li>
-        <li><a href="html-5.html">CSS Positioning and Layout</a></li>
-        <li><a href="html-6.html">CSS Transitions and Selectors</a></li>
-        <li><a href="BasicJavaScript.html">Basic JavaScript</a></li>
-        <li><a href="DomManip.html">DOM Manipulation</a></li>
-        <li><a href="fetch.html">Asynchronous JavaScript and Fetch</a></li>
-        <li><a href= "https://github.com/timnguyen-tofu/CIS4004-Group25Project/tree/main/MERN%20Stack%20Project"> KnightMarket Project</a></li>
-    </ul>
-</section>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <p class="section-label">What I've Built</p>
+      <h2>Projects</h2>
+    </div>
+    <div class="projects-grid reveal">
 
-</div>
+      <!-- Knight Market – Group Project -->
+      <a class="project-card featured-card" href="https://github.com/timnguyen-tofu/CIS4004-Group25Project/tree/main/MERN%20Stack%20Project" target="_blank" rel="noopener" style="border-color: rgba(244,162,97,0.4); grid-column: 1 / -1;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <div class="project-icon">🏪</div>
+            <p class="project-title" style="font-size:1.2rem;">Knight Market <span style="font-size:0.75rem; color:var(--amber); background:rgba(244,162,97,0.12); padding:0.2rem 0.55rem; border-radius:4px; vertical-align:middle; margin-left:0.5rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">Group Project</span></p>
+          </div>
+          <span style="font-size:0.8rem; color:var(--muted); white-space:nowrap;">↗ View on GitHub</span>
+        </div>
+        <p class="project-desc">A full-stack MERN marketplace application built for UCF students to buy and sell goods on campus. Collaborated with a team to design and implement a React front end, Express/Node.js REST API, and MongoDB data layer — supporting user authentication, product listings, and search functionality.</p>
+        <div class="project-tags"><span class="tag">MongoDB</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">REST API</span><span class="tag">Team Project</span></div>
+      </a>
 
-</main>
+      <!-- Python: Contact Book CLI -->
+      <div class="project-card" style="cursor:default;">
+        <div class="project-icon">📒</div>
+        <p class="project-title">Contact Book CLI</p>
+        <p class="project-desc">A command-line contact manager in Python. Supports adding, searching, updating, and deleting contacts stored in a local JSON file. Practices file I/O, dictionaries, and input validation.</p>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">File I/O</span><span class="tag">CLI</span></div>
+        <details style="margin-top:1rem;">
+          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
+          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>import json, os
 
-<footer>
-    <p>© 2026 Kierce Nguyen</p>
-</footer>
+FILE = "contacts.json"
 
-</div>
+def load():
+    if not os.path.exists(FILE):
+        return []
+    with open(FILE) as f:
+        return json.load(f)
+
+def save(contacts):
+    with open(FILE, "w") as f:
+        json.dump(contacts, f, indent=2)
+
+def add(contacts):
+    name  = input("Name: ").strip()
+    phone = input("Phone: ").strip()
+    email = input("Email: ").strip()
+    contacts.append({"name": name, "phone": phone, "email": email})
+    save(contacts)
+    print(f"  ✓ Added {name}")
+
+def search(contacts):
+    q = input("Search name: ").strip().lower()
+    results = [c for c in contacts if q in c["name"].lower()]
+    for c in results:
+        print(f"  {c['name']} | {c['phone']} | {c['email']}")
+    if not results:
+        print("  No results found.")
+
+def delete(contacts):
+    q = input("Delete name: ").strip().lower()
+    before = len(contacts)
+    contacts[:] = [c for c in contacts if c["name"].lower() != q]
+    save(contacts)
+    print(f"  Removed {before - len(contacts)} contact(s).")
+
+def main():
+    contacts = load()
+    actions = {"1": add, "2": search, "3": delete}
+    while True:
+        print("\n1) Add  2) Search  3) Delete  4) Quit")
+        choice = input("> ").strip()
+        if choice == "4":
+            break
+        if choice in actions:
+            actions[choice](contacts)
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </details>
+      </div>
+
+      <!-- C++: Student Grade Calculator -->
+      <div class="project-card" style="cursor:default;">
+        <div class="project-icon">📊</div>
+        <p class="project-title">Student Grade Calculator</p>
+        <p class="project-desc">A C++ console app that accepts student names and scores, calculates letter grades, class average, and identifies the highest and lowest scorers. Covers structs, vectors, loops, and sorting.</p>
+        <div class="project-tags"><span class="tag">C++</span><span class="tag">Structs</span><span class="tag">Vectors</span></div>
+        <details style="margin-top:1rem;">
+          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
+          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+struct Student {
+    string name;
+    double score;
+    char grade;
+};
+
+char toGrade(double s) {
+    if (s >= 90) return 'A';
+    if (s >= 80) return 'B';
+    if (s >= 70) return 'C';
+    if (s >= 60) return 'D';
+    return 'F';
+}
+
+int main() {
+    int n;
+    cout &lt;&lt; "Number of students: ";
+    cin &gt;&gt; n;
+    cin.ignore();
+
+    vector&lt;Student&gt; students(n);
+    double total = 0;
+
+    for (auto &s : students) {
+        cout &lt;&lt; "Name: "; getline(cin, s.name);
+        cout &lt;&lt; "Score: "; cin &gt;&gt; s.score; cin.ignore();
+        s.grade = toGrade(s.score);
+        total += s.score;
+    }
+
+    sort(students.begin(), students.end(),
+         [](const Student &a, const Student &b){ return a.score > b.score; });
+
+    cout &lt;&lt; "\n--- Results ---\n";
+    for (auto &s : students)
+        cout &lt;&lt; s.name &lt;&lt; ": " &lt;&lt; s.score &lt;&lt; " (" &lt;&lt; s.grade &lt;&lt; ")\n";
+
+    cout &lt;&lt; "\nClass average : " &lt;&lt; total / n &lt;&lt; "\n";
+    cout &lt;&lt; "Top scorer    : " &lt;&lt; students.front().name &lt;&lt; "\n";
+    cout &lt;&lt; "Lowest scorer : " &lt;&lt; students.back().name  &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+        </details>
+      </div>
+
+      <!-- Python: Expense Tracker -->
+      <div class="project-card" style="cursor:default;">
+        <div class="project-icon">💰</div>
+        <p class="project-title">Expense Tracker</p>
+        <p class="project-desc">A Python script for logging daily expenses by category (food, transport, etc.), calculating totals per category, and displaying a spending summary. Demonstrates lists, dicts, and basic data aggregation.</p>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">Data Aggregation</span><span class="tag">CLI</span></div>
+        <details style="margin-top:1rem;">
+          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
+          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>expenses = []
+
+def add_expense():
+    category = input("Category (food/transport/other): ").strip().lower()
+    desc     = input("Description: ").strip()
+    amount   = float(input("Amount ($): "))
+    expenses.append({"category": category,
+                     "desc": desc, "amount": amount})
+    print(f"  ✓ Logged ${amount:.2f} under '{category}'")
+
+def summary():
+    if not expenses:
+        print("  No expenses logged yet.")
+        return
+    totals = {}
+    for e in expenses:
+        totals[e["category"]] = totals.get(e["category"], 0) + e["amount"]
+    print("\n--- Spending Summary ---")
+    for cat, total in sorted(totals.items()):
+        print(f"  {cat.capitalize():15} ${total:.2f}")
+    print(f"  {'TOTAL':15} ${sum(totals.values()):.2f}")
+
+def main():
+    while True:
+        print("\n1) Add expense  2) Summary  3) Quit")
+        choice = input("> ").strip()
+        if choice == "1": add_expense()
+        elif choice == "2": summary()
+        elif choice == "3": break
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <p class="section-label">Let's Connect</p>
+      <h2>Get In Touch</h2>
+      <p>I'm actively looking for internship and entry-level opportunities in IT. If you have a role that could be a good fit, or just want to connect — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:kiercejnguyen@ucf.edu">Email Me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/kierce-nguyen-99a2a8291/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/kierceucf" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Kierce Nguyen · Built with HTML & CSS · Hosted on GitHub Pages</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
 </body>
 </html>
-
-
-
-
