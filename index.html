@@ -264,15 +264,45 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
     }
+    .project-card.featured {
+      border-color: rgba(244,162,97,0.4);
+      grid-column: 1 / -1;
+    }
+    .project-card.featured:hover { border-color: var(--amber); }
     .project-icon {
       font-size: 1.6rem;
       margin-bottom: 1rem;
+    }
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
     .project-title {
       font-family: 'Sora', sans-serif;
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+    }
+    .project-title.featured-title { font-size: 1.2rem; }
+    .project-badge {
+      font-size: 0.75rem;
+      color: var(--amber);
+      background: rgba(244,162,97,0.12);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: 0.5rem;
+    }
+    .project-link-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      white-space: nowrap;
     }
     .project-desc {
       font-size: 0.86rem;
@@ -290,6 +320,25 @@
       background: rgba(244,162,97,0.12);
       color: var(--amber);
       text-transform: uppercase;
+    }
+    .code-toggle {
+      margin-top: 1rem;
+    }
+    .code-toggle summary {
+      font-size: 0.8rem;
+      color: var(--amber);
+      cursor: pointer;
+      user-select: none;
+    }
+    .code-toggle pre {
+      margin-top: 0.75rem;
+      background: var(--navy);
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      overflow-x: auto;
+      line-height: 1.5;
     }
 
     /* ── CONTACT ── */
@@ -405,7 +454,7 @@
         <p class="timeline-role">Sales Representative</p>
         <p class="timeline-meta">Central Health Advisors · 2023–Present · Boca Raton, FL</p>
         <p class="timeline-desc">Consult with clients to identify healthcare coverage needs and recommend appropriate insurance solutions. Manage a pipeline of prospects through outreach, follow-up, and close — consistently meeting and exceeding monthly sales targets. Build long-term client relationships through clear communication, active listening, and ongoing account support.</p>
-        <div class="project-tags" style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.4rem;">
+        <div class="project-tags" style="margin-top:0.75rem;">
           <span class="tag">Client Relations</span>
           <span class="tag">Sales Pipeline</span>
           <span class="tag">Needs Analysis</span>
@@ -447,190 +496,14 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- PROJECTS (rendered by JS) -->
   <section id="projects">
     <div class="reveal">
       <p class="section-label">What I've Built</p>
       <h2>Projects</h2>
     </div>
-    <div class="projects-grid reveal">
-
-      <!-- Knight Market – Group Project -->
-      <a class="project-card featured-card" href="https://github.com/timnguyen-tofu/CIS4004-Group25Project/tree/main/MERN%20Stack%20Project" target="_blank" rel="noopener" style="border-color: rgba(244,162,97,0.4); grid-column: 1 / -1;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
-          <div>
-            <div class="project-icon">🏪</div>
-            <p class="project-title" style="font-size:1.2rem;">Knight Market <span style="font-size:0.75rem; color:var(--amber); background:rgba(244,162,97,0.12); padding:0.2rem 0.55rem; border-radius:4px; vertical-align:middle; margin-left:0.5rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;">Group Project</span></p>
-          </div>
-          <span style="font-size:0.8rem; color:var(--muted); white-space:nowrap;">↗ View on GitHub</span>
-        </div>
-        <p class="project-desc">A full-stack MERN marketplace application built for UCF students to buy and sell goods on campus. Collaborated with a team to design and implement a React front end, Express/Node.js REST API, and MongoDB data layer — supporting user authentication, product listings, and search functionality.</p>
-        <div class="project-tags"><span class="tag">MongoDB</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">REST API</span><span class="tag">Team Project</span></div>
-      </a>
-
-      <!-- Python: Contact Book CLI -->
-      <div class="project-card" style="cursor:default;">
-        <div class="project-icon">📒</div>
-        <p class="project-title">Contact Book CLI</p>
-        <p class="project-desc">A command-line contact manager in Python. Supports adding, searching, updating, and deleting contacts stored in a local JSON file. Practices file I/O, dictionaries, and input validation.</p>
-        <div class="project-tags"><span class="tag">Python</span><span class="tag">File I/O</span><span class="tag">CLI</span></div>
-        <details style="margin-top:1rem;">
-          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
-          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>import json, os
-
-FILE = "contacts.json"
-
-def load():
-    if not os.path.exists(FILE):
-        return []
-    with open(FILE) as f:
-        return json.load(f)
-
-def save(contacts):
-    with open(FILE, "w") as f:
-        json.dump(contacts, f, indent=2)
-
-def add(contacts):
-    name  = input("Name: ").strip()
-    phone = input("Phone: ").strip()
-    email = input("Email: ").strip()
-    contacts.append({"name": name, "phone": phone, "email": email})
-    save(contacts)
-    print(f"  ✓ Added {name}")
-
-def search(contacts):
-    q = input("Search name: ").strip().lower()
-    results = [c for c in contacts if q in c["name"].lower()]
-    for c in results:
-        print(f"  {c['name']} | {c['phone']} | {c['email']}")
-    if not results:
-        print("  No results found.")
-
-def delete(contacts):
-    q = input("Delete name: ").strip().lower()
-    before = len(contacts)
-    contacts[:] = [c for c in contacts if c["name"].lower() != q]
-    save(contacts)
-    print(f"  Removed {before - len(contacts)} contact(s).")
-
-def main():
-    contacts = load()
-    actions = {"1": add, "2": search, "3": delete}
-    while True:
-        print("\n1) Add  2) Search  3) Delete  4) Quit")
-        choice = input("> ").strip()
-        if choice == "4":
-            break
-        if choice in actions:
-            actions[choice](contacts)
-
-if __name__ == "__main__":
-    main()</code></pre>
-        </details>
-      </div>
-
-      <!-- C++: Student Grade Calculator -->
-      <div class="project-card" style="cursor:default;">
-        <div class="project-icon">📊</div>
-        <p class="project-title">Student Grade Calculator</p>
-        <p class="project-desc">A C++ console app that accepts student names and scores, calculates letter grades, class average, and identifies the highest and lowest scorers. Covers structs, vectors, loops, and sorting.</p>
-        <div class="project-tags"><span class="tag">C++</span><span class="tag">Structs</span><span class="tag">Vectors</span></div>
-        <details style="margin-top:1rem;">
-          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
-          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-struct Student {
-    string name;
-    double score;
-    char grade;
-};
-
-char toGrade(double s) {
-    if (s >= 90) return 'A';
-    if (s >= 80) return 'B';
-    if (s >= 70) return 'C';
-    if (s >= 60) return 'D';
-    return 'F';
-}
-
-int main() {
-    int n;
-    cout &lt;&lt; "Number of students: ";
-    cin &gt;&gt; n;
-    cin.ignore();
-
-    vector&lt;Student&gt; students(n);
-    double total = 0;
-
-    for (auto &s : students) {
-        cout &lt;&lt; "Name: "; getline(cin, s.name);
-        cout &lt;&lt; "Score: "; cin &gt;&gt; s.score; cin.ignore();
-        s.grade = toGrade(s.score);
-        total += s.score;
-    }
-
-    sort(students.begin(), students.end(),
-         [](const Student &a, const Student &b){ return a.score > b.score; });
-
-    cout &lt;&lt; "\n--- Results ---\n";
-    for (auto &s : students)
-        cout &lt;&lt; s.name &lt;&lt; ": " &lt;&lt; s.score &lt;&lt; " (" &lt;&lt; s.grade &lt;&lt; ")\n";
-
-    cout &lt;&lt; "\nClass average : " &lt;&lt; total / n &lt;&lt; "\n";
-    cout &lt;&lt; "Top scorer    : " &lt;&lt; students.front().name &lt;&lt; "\n";
-    cout &lt;&lt; "Lowest scorer : " &lt;&lt; students.back().name  &lt;&lt; "\n";
-    return 0;
-}</code></pre>
-        </details>
-      </div>
-
-      <!-- Python: Expense Tracker -->
-      <div class="project-card" style="cursor:default;">
-        <div class="project-icon">💰</div>
-        <p class="project-title">Expense Tracker</p>
-        <p class="project-desc">A Python script for logging daily expenses by category (food, transport, etc.), calculating totals per category, and displaying a spending summary. Demonstrates lists, dicts, and basic data aggregation.</p>
-        <div class="project-tags"><span class="tag">Python</span><span class="tag">Data Aggregation</span><span class="tag">CLI</span></div>
-        <details style="margin-top:1rem;">
-          <summary style="font-size:0.8rem; color:var(--amber); cursor:pointer; user-select:none;">View Code ▾</summary>
-          <pre style="margin-top:0.75rem; background:var(--navy); border-radius:6px; padding:1rem; font-size:0.72rem; color:var(--muted); overflow-x:auto; line-height:1.5;"><code>expenses = []
-
-def add_expense():
-    category = input("Category (food/transport/other): ").strip().lower()
-    desc     = input("Description: ").strip()
-    amount   = float(input("Amount ($): "))
-    expenses.append({"category": category,
-                     "desc": desc, "amount": amount})
-    print(f"  ✓ Logged ${amount:.2f} under '{category}'")
-
-def summary():
-    if not expenses:
-        print("  No expenses logged yet.")
-        return
-    totals = {}
-    for e in expenses:
-        totals[e["category"]] = totals.get(e["category"], 0) + e["amount"]
-    print("\n--- Spending Summary ---")
-    for cat, total in sorted(totals.items()):
-        print(f"  {cat.capitalize():15} ${total:.2f}")
-    print(f"  {'TOTAL':15} ${sum(totals.values()):.2f}")
-
-def main():
-    while True:
-        print("\n1) Add expense  2) Summary  3) Quit")
-        choice = input("> ").strip()
-        if choice == "1": add_expense()
-        elif choice == "2": summary()
-        elif choice == "3": break
-
-if __name__ == "__main__":
-    main()</code></pre>
-        </details>
-      </div>
-
+    <div class="projects-grid reveal" id="projects-grid">
+      <!-- Injected by projects/index.js -->
     </div>
   </section>
 
@@ -653,6 +526,9 @@ if __name__ == "__main__":
     <p>© 2026 Kierce Nguyen · Built with HTML & CSS · Hosted on GitHub Pages</p>
   </footer>
 
+  <!-- Projects loader (ES module) -->
+  <script type="module" src="projects/index.js"></script>
+
   <script>
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
@@ -661,5 +537,6 @@ if __name__ == "__main__":
     }, { threshold: 0.12 });
     reveals.forEach(r => observer.observe(r));
   </script>
+
 </body>
 </html>
