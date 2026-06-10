@@ -3,6 +3,16 @@
 
 const projects = [
   {
+    id: 'knight-market',
+    icon: '🛒',
+    title: 'Knight Market',
+    badge: 'Group Project',
+    desc: 'A full-stack MERN marketplace app built for UCF students — browse, list, and manage campus goods with user authentication and a React frontend.',
+    tags: ['MongoDB', 'Express', 'React', 'Node.js'],
+    externalUrl: 'https://github.com/timnguyen-tofu/CIS4004-Group25Project/tree/main/MERN%20Stack%20Project',
+    featured: true,
+  },
+  {
     id: 'expense-tracker',
     icon: '💸',
     title: 'Expense Tracker',
@@ -37,14 +47,17 @@ const grid = document.getElementById('projects-grid');
 
 projects.forEach(p => {
   const card = document.createElement('div');
-  card.className = 'project-card';
+  card.className = p.featured ? 'project-card featured' : 'project-card';
   card.style.cursor = 'pointer';
+
+  const linkLabel = p.externalUrl ? 'View on GitHub →' : 'View Demo →';
+  const titleClass = p.featured ? 'project-title featured-title' : 'project-title';
 
   card.innerHTML = `
     <div class="project-icon">${p.icon}</div>
     <div class="project-header">
-      <span class="project-title">${p.title}${p.badge ? `<span class="project-badge">${p.badge}</span>` : ''}</span>
-      <span class="project-link-label">View Demo →</span>
+      <span class="${titleClass}">${p.title}${p.badge ? `<span class="project-badge">${p.badge}</span>` : ''}</span>
+      <span class="project-link-label">${linkLabel}</span>
     </div>
     <p class="project-desc">${p.desc}</p>
     <div class="project-tags">
@@ -52,7 +65,12 @@ projects.forEach(p => {
     </div>
   `;
 
-  card.addEventListener('click', () => openModal(p));
+  if (p.externalUrl) {
+    card.addEventListener('click', () => window.open(p.externalUrl, '_blank', 'noopener'));
+  } else {
+    card.addEventListener('click', () => openModal(p));
+  }
+
   grid.appendChild(card);
 });
 
