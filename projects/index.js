@@ -3,6 +3,19 @@
 
 const projects = [
   {
+    id: 'home-lab-server',
+    icon: '🖥️',
+    title: 'Home Lab Server',
+    badge: 'Personal Project',
+    desc: 'Repurposed an old desktop into a Windows home server running a Docker-based service stack — file sharing, media streaming, network-wide ad blocking, and secure remote access — all self-deployed, configured, and documented from scratch.',
+    tags: ['Docker', 'Windows', 'Plex', 'Pi-hole', 'VPN'],
+    images: [
+      { src: 'projects/images/pihole-dashboard.png', caption: 'Pi-hole dashboard — network-wide DNS ad blocking, 79K+ domains on lists, live query monitoring.' },
+      { src: 'projects/images/tailscale-machines.png', caption: 'Tailscale VPN — secure remote access into the home network from any connected device.' },
+    ],
+    featured: true,
+  },
+  {
     id: 'knight-market',
     icon: '🛒',
     title: 'Knight Market',
@@ -50,7 +63,7 @@ projects.forEach(p => {
   card.className = p.featured ? 'project-card featured' : 'project-card';
   card.style.cursor = 'pointer';
 
-  const linkLabel = p.externalUrl ? 'View on GitHub →' : 'View Demo →';
+  const linkLabel = p.externalUrl ? 'View on GitHub →' : (p.images ? 'View Screenshots →' : 'View Demo →');
   const titleClass = p.featured ? 'project-title featured-title' : 'project-title';
 
   card.innerHTML = `
@@ -67,6 +80,8 @@ projects.forEach(p => {
 
   if (p.externalUrl) {
     card.addEventListener('click', () => window.open(p.externalUrl, '_blank', 'noopener'));
+  } else if (p.images) {
+    card.addEventListener('click', () => openGallery(p));
   } else {
     card.addEventListener('click', () => openModal(p));
   }
@@ -147,6 +162,64 @@ style.textContent = `
     flex: 1; border: none; width: 100%;
     background: #fff;
   }
+
+  .gallery-body {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+    overflow: auto;
+    gap: 1rem;
+  }
+
+  .gallery-img-wrap {
+    position: relative;
+    width: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .gallery-img {
+    max-width: 100%; max-height: 60vh;
+    border-radius: 8px;
+    border: 1px solid rgba(244,162,97,0.2);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  }
+
+  .gallery-nav-btn {
+    background: rgba(22,35,55,0.9);
+    border: 1px solid rgba(244,162,97,0.3);
+    color: #F4A261;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .gallery-nav-btn:hover { background: rgba(244,162,97,0.2); }
+  .gallery-nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .gallery-controls {
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .gallery-caption {
+    font-size: 0.85rem;
+    color: #8BA3BA;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .gallery-dots {
+    display: flex; gap: 0.4rem;
+  }
+  .gallery-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(240,244,248,0.25);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gallery-dot.active { background: #F4A261; }
 `;
 document.head.appendChild(style);
 
@@ -184,8 +257,88 @@ function closeModal() {
   if (existing) existing.remove();
   document.body.style.overflow = '';
   document.removeEventListener('keydown', escClose);
+  if (currentGalleryNav) {
+    document.removeEventListener('keydown', currentGalleryNav);
+    currentGalleryNav = null;
+  }
 }
 
 function escClose(e) {
   if (e.key === 'Escape') closeModal();
+}
+
+let currentGalleryNav = null;
+
+// ── Screenshot gallery ───────────────────────────────────────────────────────
+
+function openGallery(project) {
+  closeModal();
+
+  let index = 0;
+  const images = project.images;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'demo-overlay';
+  overlay.id = 'demo-overlay';
+
+  overlay.innerHTML = `
+    <div class="demo-modal" style="height: auto; max-height: 85vh;">
+      <div class="demo-modal-header">
+        <span class="demo-modal-title">${project.icon} ${project.title}</span>
+        <div class="demo-modal-actions">
+          <button class="demo-close-btn" id="demo-close-btn" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="gallery-body">
+        <div class="gallery-img-wrap">
+          <img class="gallery-img" id="gallery-img" src="${images[0].src}" alt="${project.title} screenshot 1" />
+        </div>
+        <p class="gallery-caption" id="gallery-caption">${images[0].caption || ''}</p>
+        <div class="gallery-controls">
+          <button class="gallery-nav-btn" id="gallery-prev" aria-label="Previous">←</button>
+          <div class="gallery-dots" id="gallery-dots">
+            ${images.map((_, i) => `<span class="gallery-dot${i === 0 ? ' active' : ''}" data-i="${i}"></span>`).join('')}
+          </div>
+          <button class="gallery-nav-btn" id="gallery-next" aria-label="Next">→</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+
+  const imgEl = document.getElementById('gallery-img');
+  const captionEl = document.getElementById('gallery-caption');
+  const dots = overlay.querySelectorAll('.gallery-dot');
+
+  function render() {
+    imgEl.src = images[index].src;
+    imgEl.alt = `${project.title} screenshot ${index + 1}`;
+    captionEl.textContent = images[index].caption || '';
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  document.getElementById('gallery-prev').addEventListener('click', () => {
+    index = (index - 1 + images.length) % images.length;
+    render();
+  });
+  document.getElementById('gallery-next').addEventListener('click', () => {
+    index = (index + 1) % images.length;
+    render();
+  });
+  dots.forEach(d => d.addEventListener('click', () => {
+    index = parseInt(d.dataset.i, 10);
+    render();
+  }));
+
+  document.getElementById('demo-close-btn').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', escClose);
+
+  currentGalleryNav = function (e) {
+    if (e.key === 'ArrowLeft') document.getElementById('gallery-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('gallery-next').click();
+  };
+  document.addEventListener('keydown', currentGalleryNav);
 }
